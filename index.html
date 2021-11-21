@@ -47,6 +47,7 @@
         const restartBtn = document.querySelector('#restart-btn');
         const containerWidth = gameArea.clientWidth;
         const containerHeight = gameArea.clientHeight;
+        const fpsInterval = 1000/60;
 
         //make some variables accessible to functions
         let speed;
@@ -61,6 +62,9 @@
             threshold: 2,
             timeout: 200
         });
+        //Variables for fixed fps rate
+        var now, delta, then;
+
 
         window.addEventListener('shake', shakeEventDidOccur, false);
 
@@ -76,6 +80,7 @@
             score = 0;
             scoreUpdated = false;
             myShakeEvent.start();
+            then = Date.now();
             //flapping = false;
             playing = true;
             speedSpan.textContent = speed;
@@ -149,8 +154,14 @@
         }
 
         function gameLoop() {
-            update();
             if (playing) {
+                now = Date.now();
+                delta = now - then;
+                //Wenn letztes Update lang genug her ist
+                if (delta > interval) {
+                    update();
+                }
+                
                 requestAnimationFrame(gameLoop);
             }
         }
