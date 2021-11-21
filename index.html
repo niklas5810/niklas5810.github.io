@@ -159,8 +159,9 @@
                 now = Date.now();
                 delta = now - then;
                 //Wenn letztes Update lang genug her ist
-                if (delta > interval) {
+                if (delta > fpsInterval) {
                     update();
+                    then = now - (delta % fpsInterval);
                 }
             }
         }
