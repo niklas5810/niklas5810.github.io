@@ -107,7 +107,7 @@
                     score += 1;
                     scoreUpdated = true;
                 }
-                //scoreSpan.textContent = score;
+                scoreSpan.textContent = score;
             }
 
 
@@ -172,7 +172,6 @@
                 }
                 if ((now - lastFps) > 1000) {
                     window.console.log("fps: " + (frames) + " fps");
-                    scoreSpan.textContent = frames;
                     lastFps = now;
                     frames = 0;
                 }
