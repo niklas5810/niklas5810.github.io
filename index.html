@@ -15,41 +15,220 @@
     </title>
     <link id="css" rel="stylesheet" type="text/css" href="flappyStyle.css">
     <!-- Async Seite weiterladen während Skript eingelesen wird -->
-    <script type="text/javascript" src="shake.js"></script>
+    
 </head>
 
 <body>
-    <h1>Shake to Undo v5</h1>
-    <h2>for your mobile web app</h2>
+    <div id="game">
+        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten.</p>
 
-    <p>Shake your iPhone/iPad to see a custom action.</p>
-    <p>Works on iOS +4.2.1, Android 4.0.3 (default browser), Opera Mobile (Android), BlackBerry PlayBook 2.0</p>
+        <div id="game-area">
+            <div id="bird"></div>
+            <div class="pole" id="pole-1"></div>
+            <div class="pole" id="pole-2"></div>
+        </div>
+        <div id="game-info">
+            <p>Score:<span id="score">0</span></p>
+            <button id="restart-btn">Restart</button>
+            <p>Speed:<span id="speed">2</span></p>
+        </div>
+    </div>
+    <script>
+        "use strict";
 
-    <p><a href="http://dev.w3.org/geo/api/spec-source-orientation">W3C DeviceOrientation Event Specification</a></p>
+        //Save DOM objects to variables
+        const bird = document.querySelector('#bird');
+        const poles = document.querySelectorAll('.pole');
+        const pole1 = document.querySelector('#pole-1');
+        const pole2 = document.querySelector('#pole-2');
+        const scoreSpan = document.querySelector('#score');
+        const speedSpan = document.querySelector('#speed');
+        const gameArea = document.querySelector('#game-area');
+        const restartBtn = document.querySelector('#restart-btn');
+        const containerWidth = gameArea.clientWidth;
+        const containerHeight = gameArea.clientHeight;
 
-    <script type="text/javascript">
+        //make some variables accessible to functions
+        let speed;
+        let score;
+        let flapping;
+        let playing;
+        let scoreUpdated;
+        let coolDownFlag;
+        let acl = new Accelerometer({ frequency: 60 });
 
-        //create a new instance of shake.js.
+        acl.addEventListener('reading', () => {
+            console.log("Acceleration along the X-axis " + acl.x);
+            console.log("Acceleration along the Y-axis " + acl.y);
+            console.log("Acceleration along the Z-axis " + acl.z);
+            /*if (!coolDownFlag) {
+                flap();
+                coolDownFlag=true;
+                setTimeout(function(){coolDownFlag = false}, 200);
+            } */
+        });
+
+
+        //Accelerometer start
+        acl.start();
+
+        //Configure Shake.js shake event
         var myShakeEvent = new Shake({
-            threshold: 2,
+            threshold: 15,
             timeout: 200
         });
 
-        // start listening to device motion
-        myShakeEvent.start();
-
-        // register a shake event
         window.addEventListener('shake', shakeEventDidOccur, false);
 
-        //shake event callback
         function shakeEventDidOccur() {
+            flap();
+        }
+    
 
-            //put your own code here etc.
-            alert('Shake!');
+        function restart() {
+            //Remove event listener to avoid multiple restarts.
+            restartBtn.removeEventListener('click', restart);
+            speed = 3;
+            score = 0;
+            scoreUpdated = false;
+            coolDownFlag = false;
+            myShakeEvent.start();
+            //flapping = false;
+            playing = true;
+            speedSpan.textContent = speed;
+            scoreSpan.textContent = score;
+            poles.forEach((pole) => {
+                pole.style.right = 0;
+            });
+            bird.style.top = 20 + "%";
+            gameLoop();
         }
 
-    </script>
+        function update() {
+            //Move poles
+            // check on so if/why we need such a wordy method.
+            let polesCurrentPos = parseFloat(window.getComputedStyle(poles[0]).getPropertyValue("right"));
 
+            //Update score
+            if (polesCurrentPos > containerWidth * 0.85) {
+                if (!scoreUpdated) {
+                    score += 1;
+                    scoreUpdated = true;
+                }
+                scoreSpan.textContent = score;
+            }
+
+            //Check whether the poles went outside of game area
+            if (polesCurrentPos > containerWidth) {
+                //Generate new poles
+                let newHeight = parseInt(Math.random() * 100);
+                pole1.style.height = 100 + newHeight + "px";
+                pole2.style.height = 100 - newHeight + "px";
+
+                //move poles back to the right side
+                polesCurrentPos = 0;
+
+                //Update speed
+                speed += 0.25;
+                speedSpan.textContent = parseInt(speed);
+                scoreUpdated = false;
+            }
+
+            poles.forEach((pole) => {
+                pole.style.right = polesCurrentPos + speed + "px";
+            });
+
+            //Let the bird loose height
+            let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
+            bird.style.top = birdTop + 2 + "px";
+
+            //check for collisions
+            if (collision(bird, pole1) || collision(bird, pole2) || birdTop <= 0 ||
+                birdTop > containerHeight - bird.clientHeight) {
+                gameOver();
+            }
+        }
+
+        //Move bird
+        function flap() {
+            if (playing) {
+                let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
+                bird.style.top = birdTop + -60 + "px";
+            }
+        }
+
+
+        function gameOver() {
+            myShakeEvent.stop();
+            window.console.log("game over");
+            playing = false;
+            restartBtn.addEventListener('click', restart);
+        }
+
+        function gameLoop() {
+            update();
+            if (playing) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function collision(gameDiv1, gameDiv2) {
+            // Get the top left coords of the first div
+            let left1 = gameDiv1.getBoundingClientRect().left;
+            let top1 = gameDiv1.getBoundingClientRect().top;
+
+            // Get the dimensions of the first div
+            let height1 = gameDiv1.clientHeight;
+            let width1 = gameDiv1.clientWidth;
+
+            let bottom1 = top1 + height1;
+            let right1 = left1 + width1;
+            let left2 = gameDiv2.getBoundingClientRect().left;
+            let top2 = gameDiv2.getBoundingClientRect().top;
+            let height2 = gameDiv2.clientHeight;
+            let width2 = gameDiv2.clientWidth;
+            let bottom2 = top2 + height2;
+            let right2 = left2 + width2;
+
+            if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
+                return false;
+            return true;
+        }
+
+        // Start flapping with space bar
+        document.addEventListener("keydown", function (e) {
+            var key = e.key;
+            if (key === " " && playing) {
+                flap();
+            }
+        });
+
+        // Stop flapping with space bar
+        document.addEventListener("keyup", function (e) {
+            e.preventDefault(); // Stops weird behaviour where releasing space calls restart()
+            var key = e.key;
+            if (key === " " && playing) {
+                //flapping = false;
+            }
+        });
+
+        // Start flapping with mousedown
+        gameArea.addEventListener("mousedown", function (e) {
+            if (playing) {
+                flap();
+            }
+        });
+
+        // stop flapping with mousedown
+        gameArea.addEventListener("mouseup", function (e) {
+            if (playing) {
+            
+            }
+        });
+
+        restart();
+
+    </script>
 </body>
 
 </html>
