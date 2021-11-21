@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <h1>Shake to Undo v2</h1>
+    <h1>Shake to Undo v3</h1>
     <h2>for your mobile web app</h2>
 
     <p>Shake your iPhone/iPad to see a custom action.</p>
@@ -32,7 +32,8 @@
 
             //create a new instance of shake.js.
             var myShakeEvent = new Shake({
-                threshold: 2
+                threshold: 2,
+                timeout: 200
             });
 
             // start listening to device motion
