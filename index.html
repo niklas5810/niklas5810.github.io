@@ -20,7 +20,7 @@
 
 <body>
     <div id="game">
-        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten. v3</p>
+        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten. v4</p>
 
         <div id="game-area">
             <div id="bird"></div>
@@ -47,7 +47,7 @@
         const restartBtn = document.querySelector('#restart-btn');
         const containerWidth = gameArea.clientWidth;
         const containerHeight = gameArea.clientHeight;
-        const fpsInterval = 1000/60;
+        const fpsInterval = 1000/30;
 
         //make some variables accessible to functions
         let speed;
@@ -64,6 +64,7 @@
         });
         //Variables for fixed fps rate
         var now, delta, then;
+        var lastFps, frames;
 
 
         window.addEventListener('shake', shakeEventDidOccur, false);
@@ -81,6 +82,8 @@
             scoreUpdated = false;
             myShakeEvent.start();
             then = Date.now();
+            frames = 0;
+            lastFps = Date.now();
             //flapping = false;
             playing = true;
             speedSpan.textContent = speed;
@@ -103,8 +106,9 @@
                     score += 1;
                     scoreUpdated = true;
                 }
-                scoreSpan.textContent = score;
+                //scoreSpan.textContent = score;
             }
+
 
             //Check whether the poles went outside of game area
             if (polesCurrentPos > containerWidth) {
@@ -161,12 +165,19 @@
                 delta = now - then;
                 //Wenn letztes Update lang genug her ist
                 if (delta > fpsInterval) {
+                    frames += 1;
                     update();
                     then = now - (delta % fpsInterval);
                 }
+                if ((now - lastFps) > 1000) {
+                    window.console.log("fps: " + (frames) + " fps");
+                    scoreSpan.textContent = frames;
+                    lastFps = now;
+                    frames = 0;
+                }
             }
         }
-        
+
 
         function collision(gameDiv1, gameDiv2) {
             // Get the top left coords of the first div
