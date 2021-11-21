@@ -54,6 +54,23 @@
         let flapping;
         let playing;
         let scoreUpdated;
+        let coolDownFlag;
+        let acl = new Accelerometer({ frequency: 60 });
+
+        acl.addEventListener('reading', () => {
+            console.log("Acceleration along the X-axis " + acl.x);
+            console.log("Acceleration along the Y-axis " + acl.y);
+            console.log("Acceleration along the Z-axis " + acl.z);
+            if (!coolDownFlag) {
+                flap();
+                coolDownFlag=true;
+                setTimeout(function(){coolDownFlag = false}, 200);
+            }
+            
+
+        });
+
+        acl.start();
 
         function restart() {
             //Remove event listener to avoid multiple restarts.
@@ -61,7 +78,8 @@
             speed = 3;
             score = 0;
             scoreUpdated = false;
-            flapping = false;
+            coolDownFlag = false;
+            //flapping = false;
             playing = true;
             speedSpan.textContent = speed;
             scoreSpan.textContent = score;
@@ -106,13 +124,9 @@
                 pole.style.right = polesCurrentPos + speed + "px";
             });
 
-            //Move bird
+            //Let the bird loose height
             let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
-            if (flapping) {
-                bird.style.top = birdTop + -5 + "px";
-            } else if (birdTop < containerHeight - bird.clientHeight) {
-                bird.style.top = birdTop + 2 + "px";
-            }
+            bird.style.top = birdTop + 2 + "px";
 
             //check for collisions
             if (collision(bird, pole1) || collision(bird, pole2) || birdTop <= 0 ||
@@ -120,6 +134,15 @@
                 gameOver();
             }
         }
+
+        //Move bird
+        function flap() {
+            if (playing) {
+                let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
+                bird.style.top = birdTop + -60 + "px";
+            }
+        }
+
 
         function gameOver() {
             window.console.log("game over");
@@ -161,7 +184,7 @@
         document.addEventListener("keydown", function (e) {
             var key = e.key;
             if (key === " " && playing) {
-                flapping = true;
+                flap();
             }
         });
 
@@ -170,21 +193,21 @@
             e.preventDefault(); // Stops weird behaviour where releasing space calls restart()
             var key = e.key;
             if (key === " " && playing) {
-                flapping = false;
+                //flapping = false;
             }
         });
 
         // Start flapping with mousedown
         gameArea.addEventListener("mousedown", function (e) {
             if (playing) {
-                flapping = true;
+                flap();
             }
         });
 
         // stop flapping with mousedown
         gameArea.addEventListener("mouseup", function (e) {
             if (playing) {
-                flapping = false;
+            
             }
         });
 
