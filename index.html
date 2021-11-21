@@ -20,7 +20,7 @@
 
 <body>
     <div id="game">
-        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten. v2</p>
+        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten. v3</p>
 
         <div id="game-area">
             <div id="bird"></div>
@@ -153,6 +153,7 @@
             restartBtn.addEventListener('click', restart);
         }
 
+
         function gameLoop() {
             requestAnimationFrame(gameLoop);
             if (playing) {
@@ -165,6 +166,7 @@
                 }
             }
         }
+        
 
         function collision(gameDiv1, gameDiv2) {
             // Get the top left coords of the first div
