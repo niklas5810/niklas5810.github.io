@@ -9,233 +9,299 @@
     <!-- Beschreibung -->
     <meta name="description" content="Das lustige Spiel direkt im Browser">
     <!-- Stichwörter -->
-    <meta name="keywords" content="Flappy Birds, HTML">
+    <meta name="keywords" content="SantaJump, HTML">
     <title>
-        Niklas' Flappy Birds
+        Niklas' Santa Jump
     </title>
-    <link id="css" rel="stylesheet" type="text/css" href="flappyStyle.css">
-    
+    <link id="css" rel="stylesheet" type="text/css" href="santaStyle.css">
+
     <script type="text/javascript" src="shake.js"></script>
 </head>
 
 <body>
-    <div id="game">
-        <p id="instructions">Drücke die Leertaste, um das Spiel zu starten. v5</p>
+<div id="game">
+    <h1>Santa Jump</h1>
+    <div id="santa"></div>
+    <div class="pole" id="pole-1"></div>
+    <div class="pole" id="pole-2"></div>
+    <div class="pole" id="mid-pole"></div>
+    <div class="pole" id="large-pole"></div>
+    <div id="floor"></div>
+    <button id="restart-btn">Restart</button>
+</div>
+<script type="text/javascript">
+    "use strict";
 
-        <div id="game-area">
-            <div id="bird"></div>
-            <div class="pole" id="pole-1"></div>
-            <div class="pole" id="pole-2"></div>
-        </div>
-        <div id="game-info">
-            <p>Score:<span id="score">0</span></p>
-            <button id="restart-btn">Restart</button>
-            <p>Speed:<span id="speed">2</span></p>
-        </div>
-    </div>
-    <script type="text/javascript">
-        "use strict";
+    //Save DOM objects to constant variables
+    const santa = document.querySelector('#santa');
+    const poles = document.querySelectorAll('.pole');
+    const pole1 = document.querySelector('#pole-1');
+    const pole2 = document.querySelector('#pole-2');
+    const game = document.querySelector('#game');
+    const restartBtn = document.querySelector('#restart-btn');
+    const fps = 30;
+    const fpsInterval = 1000 / fps;
+    const maxAmnPoles = 3;
+    const test = document.querySelector('#test');
+    const floorHeight = 0.15;
+    const minimalGapBetweenPoles = 400;
+    const poleHeight = 8 + "%";
 
-        //Save DOM objects to variables
-        const bird = document.querySelector('#bird');
-        const poles = document.querySelectorAll('.pole');
-        const pole1 = document.querySelector('#pole-1');
-        const pole2 = document.querySelector('#pole-2');
-        const scoreSpan = document.querySelector('#score');
-        const speedSpan = document.querySelector('#speed');
-        const gameArea = document.querySelector('#game-area');
-        const restartBtn = document.querySelector('#restart-btn');
-        const containerWidth = gameArea.clientWidth;
-        const containerHeight = gameArea.clientHeight;
-        const fps = 30;
-        const fpsInterval = 1000/fps;
+    //make some variables accessible to functions
+    let playing;
+    let score;
+    let speed;
+    let scoreUpdated;
+    let jumping;
+    let placedPoles;
+    let lastPole;
+    let gameWidth = game.clientWidth;
+    let gameHeight = game.clientHeight;
 
-        //make some variables accessible to functions
-        let speed;
-        let score;
-        let flapping;
-        let playing;
-        let scoreUpdated;
-    
-
-        //Configure Shake.js shake event
-        var myShakeEvent = new Shake({
-            threshold: 2,
-            timeout: 200
-        });
-        //Variables for fixed fps rate
-        var now, delta, then;
-        var lastFps, frames;
+    //Place the initial poles and set the flag for the first game
+    placeInitialPoles();
+    var firstGame = true;
 
 
-        window.addEventListener('shake', shakeEventDidOccur, false);
+    //Initialize shake.js
+    var myShakeEvent = new Shake({
+        threshold: 2,
+        timeout: 200
+    });
 
-        function shakeEventDidOccur() {
-            flap();
+    //Variables for fixed fps rate
+    var now, delta, then;
+
+    //Variables for internal fps log
+    var lastFpsTime, frames;
+
+    //Initialize, what method should be called, when shake was noticed.
+    window.addEventListener('shake', shakeOccured, false);
+
+    //Restarts the game, initializes all necessary variables
+    function restart() {
+        //Remove 'restart'-button from UI.
+        restartBtn.removeEventListener('click', restart);
+        restartBtn.classList.toggle('hide');
+        speed = 15;
+        score = 0;
+        scoreUpdated = false;
+        myShakeEvent.start();
+        then = Date.now();
+        frames = 0;
+        lastFpsTime = Date.now();
+        playing = true;
+
+        //If this is not the first game, replace the initial poles...
+        if (!firstGame) {
+            placeInitialPoles();
         }
-    
+        firstGame = false;
 
-        function restart() {
-            //Remove event listener to avoid multiple restarts.
-            restartBtn.removeEventListener('click', restart);
-            speed = 3;
-            score = 0;
-            scoreUpdated = false;
-            myShakeEvent.start();
-            then = Date.now();
-            frames = 0;
-            lastFps = Date.now();
-            //flapping = false;
-            playing = true;
-            speedSpan.textContent = speed;
-            scoreSpan.textContent = score;
-            poles.forEach((pole) => {
-                pole.style.right = 0;
-            });
-            bird.style.top = 20 + "%";
-            gameLoop();
-        }
+        gameLoop();
+    }
 
-        function update() {
-            //Move poles
-            // check on so if/why we need such a wordy method.
-            let polesCurrentPos = parseFloat(window.getComputedStyle(poles[0]).getPropertyValue("right"));
+
+    //Updates the displayed data on screen
+    function update() {
+        //Update screensize if necessary
+        gameWidth = game.clientWidth;
+        gameHeight = game.clientHeight;
+
+        //Check each pole:
+        poles.forEach((pole) => {
+            let polesCurrentPos = parseFloat(window.getComputedStyle(pole).getPropertyValue("right"));
 
             //Update score
-            if (polesCurrentPos > containerWidth * 0.85) {
+            if (polesCurrentPos > gameWidth * 0.8) {
                 if (!scoreUpdated) {
                     score += 1;
                     scoreUpdated = true;
                 }
-                scoreSpan.textContent = score;
             }
 
-
-            //Check whether the poles went outside of game area
-            if (polesCurrentPos > containerWidth) {
-                //Generate new poles
-                let newHeight = parseInt(Math.random() * 100);
-                pole1.style.height = 100 + newHeight + "px";
-                pole2.style.height = 100 - newHeight + "px";
-
-                //move poles back to the right side
+            //Check whether a pole went outside of the game area
+            if (polesCurrentPos > gameWidth) {
+                //window.console.log(polesCurrentPos);
+                //Set it back to the start and hide the pole
+                pole.removeAttribute('placed');
+                pole.classList.toggle('hide');
                 polesCurrentPos = 0;
+                pole.style.right = 0;
+                placedPoles -= 1;
 
                 //Update speed
-                speed += 0.25;
-                speedSpan.textContent = parseInt(speed);
+                speed += 0.125;
                 scoreUpdated = false;
             }
 
-            poles.forEach((pole) => {
-                pole.style.right = polesCurrentPos + speed + "px";
-            });
-
-            //Let the bird loose height
-            let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
-            bird.style.top = birdTop + 2 + "px";
-
-            //check for collisions
-            if (collision(bird, pole1) || collision(bird, pole2) || birdTop <= 0 ||
-                birdTop > containerHeight - bird.clientHeight) {
-                gameOver();
+            //Move pole
+            if (pole.getAttribute('placed') == 'true') {
+                pole.style.right = (polesCurrentPos / gameWidth) * 100 + (speed / 16) + "%";
             }
+
+        });
+
+        //Increase the last pole counter
+        lastPole += speed;
+
+        //Try to place a new pole
+        if (placedPoles < maxAmnPoles) {
+            placedPoles += 1;
+            setTimeout(function () {
+                placePole();
+            }, (Math.random() * 1000));
         }
 
-        //Move bird
-        function flap() {
-            if (playing) {
-                let birdTop = parseFloat(window.getComputedStyle(bird).getPropertyValue("top"));
-                bird.style.top = birdTop + -60 + "px";
+
+        //check for collisions
+        checkForCollisions();
+    }
+
+
+    /**
+     * Places the initial poles (two small ones) on the field and sets the other
+     * ones as 'hide'.
+     */
+    function placeInitialPoles() {
+        //Hide all poles
+        poles.forEach((pole => {
+            pole.classList.add('hide');
+            pole.style.right = 0 + "%";
+            pole.removeAttribute('placed');
+        }));
+        placedPoles = 0;
+
+        //Set initial poles
+        do {
+            var firstPolePos = Math.random() * 60;
+            var secondPolePos = Math.random() * 60;
+        } while (Math.abs(firstPolePos - secondPolePos) < 20);
+        pole1.style.right = firstPolePos + "%";
+        pole2.style.right = secondPolePos + "%";
+        pole1.setAttribute('placed', 'true');
+        placedPoles += 1;
+        pole1.classList.toggle('hide');
+        pole2.setAttribute('placed', 'true');
+        placedPoles += 1;
+        pole2.classList.toggle('hide');
+        lastPole = Math.min(firstPolePos, secondPolePos);
+    }
+
+
+    function placePole() {
+        if (lastPole > minimalGapBetweenPoles) {
+            var idx;
+            //Find a pole which is currently not placed
+            do {
+                idx = parseInt(Math.random() * poles.length);
+            } while (poles[idx].getAttribute('placed') == 'true');
+
+            poles[idx].setAttribute('placed', 'true');
+            poles[idx].classList.toggle('hide');
+            lastPole = 0;
+        } else {
+            setTimeout(function () {
+                placePole();
+            }, (Math.random() * 1000));
+        }
+
+    }
+
+
+    function checkForCollisions() {
+        let santaRight = santa.getBoundingClientRect().right;
+        let santaLeft = santaRight - 20;
+        let santaBottom = santa.getBoundingClientRect().bottom;
+
+        poles.forEach((pole) => {
+            if (pole.getAttribute('placed') == "true") {
+                let poleRight = pole.getBoundingClientRect().right;
+                let poleLeft = poleRight - pole.getBoundingClientRect().width;
+                let poleTop = pole.getBoundingClientRect().top;
+                if (santaRight >= poleLeft && santaLeft < poleRight && santaBottom >= poleTop) {
+                    gameOver();
+                }
             }
-        }
+        });
+    }
 
 
-        function gameOver() {
-            myShakeEvent.stop();
-            window.console.log("game over");
-            playing = false;
-            restartBtn.addEventListener('click', restart);
-        }
+    /**
+     * Method lets Santa perform a jump, is he is currently walking on the ground. If Santa is already
+     * performing a jump and is not touching the ground, no jump will be performed.
+     */
+    function jump() {
+        santa.classList.add("jump");
+        setTimeout(function() {
+            santa.classList.remove("jump");
+        }, 500);
+    }
 
+    //TODO gameOver()
+    function gameOver() {
+        myShakeEvent.stop();
+        window.console.log("game over");
+        playing = false;
+        restartBtn.classList.toggle('hide');
+        restartBtn.addEventListener('click', restart);
+    }
 
-        function gameLoop() {
+    /**
+     * Method executes a game loop. Therefor it calculates and updates all necessary values and
+     * requests a new animation frame for the game. Method also ensures, that the framerate doesn't
+     * exceed the maximum framerate [fps].
+     */
+    function gameLoop() {
+        if (playing) {
             requestAnimationFrame(gameLoop);
-            if (playing) {
-                now = Date.now();
-                delta = now - then;
-                //Wenn letztes Update lang genug her ist
-                if (delta > fpsInterval) {
-                    frames += 1;
-                    update();
-                    then = now - (delta % fpsInterval);
-                }
-                if ((now - lastFps) > 1000) {
-                    window.console.log("fps: " + (frames) + " fps");
-                    lastFps = now;
-                    frames = 0;
-                }
+            now = Date.now();
+            delta = now - then;
+            //Wenn letztes Update lang genug her ist
+            if (delta > fpsInterval) {
+                frames += 1;
+                update();
+                then = now - (delta % fpsInterval);
+            }
+            if ((now - lastFpsTime) > 1000) {
+                window.console.log("fps: " + frames + " fps");
+                lastFpsTime = now;
+                frames = 0;
             }
         }
+    }
+
+    //TODO collision
 
 
-        function collision(gameDiv1, gameDiv2) {
-            // Get the top left coords of the first div
-            let left1 = gameDiv1.getBoundingClientRect().left;
-            let top1 = gameDiv1.getBoundingClientRect().top;
+    //Method that will be called, when a shake was noticed.
+    function shakeOccured() {
+        jump();
+    }
 
-            // Get the dimensions of the first div
-            let height1 = gameDiv1.clientHeight;
-            let width1 = gameDiv1.clientWidth;
-
-            let bottom1 = top1 + height1;
-            let right1 = left1 + width1;
-            let left2 = gameDiv2.getBoundingClientRect().left;
-            let top2 = gameDiv2.getBoundingClientRect().top;
-            let height2 = gameDiv2.clientHeight;
-            let width2 = gameDiv2.clientWidth;
-            let bottom2 = top2 + height2;
-            let right2 = left2 + width2;
-
-            if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
-                return false;
-            return true;
+    //Listen for spacebar presses
+    document.addEventListener("keydown", function (e) {
+        var key = e.key;
+        if (key == " ") {
+            if (!playing) {
+                restart();
+            }
+            jump();
         }
+    });
 
-        // Start flapping with space bar
-        document.addEventListener("keydown", function (e) {
-            var key = e.key;
-            if (key === " " && playing) {
-                flap();
-            }
-        });
+    //Listen for mouse clicks
+    game.addEventListener("mousedown", function (e) {
+        if (!playing) {
+            restart();
+        }
+        jump();
+    });
 
-        // Stop flapping with space bar
-        document.addEventListener("keyup", function (e) {
-            e.preventDefault(); // Stops weird behaviour where releasing space calls restart()
-            var key = e.key;
-            if (key === " " && playing) {
-                //flapping = false;
-            }
-        });
+    //restart();
 
-        // Start flapping with mousedown
-        gameArea.addEventListener("mousedown", function (e) {
-            if (playing) {
-                flap();
-            }
-        });
-
-        // stop flapping with mousedown
-        gameArea.addEventListener("mouseup", function (e) {
-            if (playing) {
-            
-            }
-        });
-
-        restart();
-
-    </script>
+</script>
 </body>
+
 
 </html>

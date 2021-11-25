@@ -1,0 +1,116 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #D6D2B2;
+}
+
+#h1 {
+    font-size: 80vw;
+    margin-top: 50vw;
+    padding-top: 50vw;
+}
+
+
+#game{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: auto;
+    background-color: #D6D2B2;
+    width: 100%;
+    height:100%;
+    position: relative;
+    overflow: hidden;
+}
+
+#floor{
+    position: absolute;
+    height: 15%;
+    width: 100%;
+    background-color: #A9D0F5;
+    bottom: 0px;
+}
+
+#restart-btn {
+    padding: 10px 10px;
+    position: absolute;
+    background-color: green;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    bottom: 50%;
+    left: 50%
+}
+
+#santa {
+    padding: 3% 2%;
+    position: absolute;
+    background-image: url('santa_freigestellt_2.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: none;
+    bottom: 15%;
+    left: 20%;
+}
+
+.pole {
+    position: absolute;
+    height: 8%;
+    bottom: 15%;
+}
+
+#pole-1 {
+    width: 2%;
+    background-image: url("pole_small.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#pole-2 {
+    width: 2%;
+    background-image: url("pole_small.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#mid-pole {
+    background-color: green;
+    width: 4%;
+}
+
+#large-pole {
+    background-color: green;
+    width: 5%;
+}
+
+
+.hide {
+    display: none
+}
+
+.jump {
+    animation: jump 0.5s linear;
+}
+
+@keyframes jump {
+    0% {
+        bottom: 15%;
+    }
+
+    30% {
+        bottom: 30%;
+    }
+
+    50% {
+        bottom: 40%;
+    }
+
+    80% {
+        bottom: 30%;
+    }
+
+    100% {
+        bottom: 15%;
+    }
+}
