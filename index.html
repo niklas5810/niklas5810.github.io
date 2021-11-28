@@ -83,6 +83,7 @@
         //Remove 'restart'-button from UI.
         restartBtn.removeEventListener('click', restart);
         restartBtn.classList.toggle('hide');
+        santa.classList.add('.running');
         speed = 15;
         score = 0;
         scoreUpdated = false;
@@ -240,6 +241,7 @@
 
     //TODO gameOver()
     function gameOver() {
+        santa.classList.remove('.running');
         myShakeEvent.stop();
         window.console.log("game over");
         playing = false;
