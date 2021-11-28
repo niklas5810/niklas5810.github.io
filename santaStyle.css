@@ -63,14 +63,14 @@ html, body {
 }
 
 #pole-1 {
-    width: 2%;
+    width: 2vw;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 #pole-2 {
-    width: 2%;
+    width: 2vw;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -78,12 +78,12 @@ html, body {
 
 #mid-pole {
     background-color: green;
-    width: 4%;
+    width: 4vw;
 }
 
 #large-pole {
     background-color: green;
-    width: 5%;
+    width: 5vw;
 }
 
 
