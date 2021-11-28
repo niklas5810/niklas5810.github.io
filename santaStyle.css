@@ -77,12 +77,16 @@ html, body {
 }
 
 #mid-pole {
-    background-color: green;
+    background-image: url("images/pole_medium.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     width: 4vw;
 }
 
 #large-pole {
-    background-color: green;
+    background-image: url("images/pole_large.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     width: 5vw;
 }
 
