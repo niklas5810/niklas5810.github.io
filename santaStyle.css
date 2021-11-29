@@ -55,8 +55,8 @@ html, body {
 }
 
 #santa {
-    height: 70px;
-    width: 50px;
+    height: 12%;
+    width: 5%;
     position: absolute;
     background-image: url("images/santa_freigestellt.png");
     background-size: 100% 100%;
@@ -67,19 +67,19 @@ html, body {
 
 .pole {
     position: absolute;
-    height: 60px;
+    height: 10%;
     bottom: 15%;
 }
 
 #pole-1 {
-    width: 30px;
+    width: 2.5%;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 #pole-2 {
-    width: 30px;
+    width: 2.5%;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -89,14 +89,14 @@ html, body {
     background-image: url("images/pole_medium.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 4vw;
+    width: 4%;
 }
 
 #large-pole {
     background-image: url("images/pole_large.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 5vw;
+    width: 5%;
 }
 
 
@@ -114,11 +114,11 @@ html, body {
 
 @keyframes jump {
     0% {
-        bottom: 15%;
+        bottom: 18%;
     }
 
     30% {
-        bottom: 30%;
+        bottom: 35%;
     }
 
     50% {
@@ -126,11 +126,11 @@ html, body {
     }
 
     80% {
-        bottom: 30%;
+        bottom: 35%;
     }
 
     100% {
-        bottom: 15%;
+        bottom: 18%;
     }
 }
 
