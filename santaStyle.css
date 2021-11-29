@@ -4,13 +4,6 @@ html, body {
     background-color: #8cfffb;
 }
 
-@media (max-width: 500px) {
-    html, body {
-        height: 100%;
-        width: 50%;
-        background-color: #D6D2B2;
-    }
-}
 
 #h1 {
     font-size: 80vw;
