@@ -52,43 +52,44 @@ html, body {
     width: 5%;
     position: absolute;
     background-image: url("images/santa_freigestellt.png");
-    background-size: 100% 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
     border: none;
     bottom: 15%;
     left: 20%;
+
 }
 
 .pole {
     position: absolute;
     height: 10%;
     bottom: 15%;
+    background-size: contain;
+    background-position: bottom;
 }
 
 #pole-1 {
     width: 2.5%;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
 }
 
 #pole-2 {
     width: 2.5%;
     background-image: url("pole_small.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
 }
 
 #mid-pole {
     background-image: url("images/pole_medium.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
     width: 4%;
 }
 
 #large-pole {
     background-image: url("images/pole_large.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
     width: 5%;
 }
 
