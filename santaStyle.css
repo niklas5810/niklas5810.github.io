@@ -61,7 +61,7 @@ html, body {
     border: none;
     bottom: 15%;
     left: 20%;
-
+    resize: both;
 }
 
 .pole {
@@ -70,11 +70,13 @@ html, body {
     bottom: 15%;
     background-size: contain;
     background-position: bottom;
+    object-fit: contain;
+    resize: both;
 }
 
 #pole-1 {
     width: 2.5%;
-    background-image: url("pole_small.png");
+    background-color: green;
     background-repeat: no-repeat;
 }
 
