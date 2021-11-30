@@ -85,31 +85,26 @@ html, body {
     bottom: 15%;
     background-size: contain;
     background-position: bottom;
-    object-fit: contain;
-    resize: both;
+    object-fit: fill;
 }
 
 #pole-1 {
     width: 2.5%;
-    background-image: url("pole_small.png");
-    background-repeat: round;
+    background-image: url("images/sugar_pole_2.png");
 }
 
 #pole-2 {
     width: 2.5%;
-    background-image: url("pole_small.png");
-    background-repeat: round;
+    background-image: url("images/sugar_pole_2.png");
 }
 
 #mid-pole {
     background-image: url("images/pole_medium.png");
-    background-repeat: round;
     width: 4%;
 }
 
 #large-pole {
     background-image: url("images/pole_large.png");
-    background-repeat: round;
     width: 5%;
 }
 
