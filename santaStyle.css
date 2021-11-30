@@ -11,6 +11,21 @@ html, body {
     padding-top: 50vw;
 }
 
+@media (max-width: 20cm) {
+    #game{
+        font-family: "Wide Latin", serif;
+        text-align: center;
+        margin: auto;
+        animation: snowing 2s infinite linear;
+        background-repeat: repeat;
+        background-size: 200px 200px;
+        width: 50%;
+        height:100%;
+        position: relative;
+        overflow: hidden;
+    }
+}
+
 
 #game{
     font-family: "Wide Latin", serif;
@@ -76,25 +91,25 @@ html, body {
 
 #pole-1 {
     width: 2.5%;
-    background-color: green;
-    background-repeat: no-repeat;
+    background-image: url("pole_small.png");
+    background-repeat: round;
 }
 
 #pole-2 {
     width: 2.5%;
     background-image: url("pole_small.png");
-    background-repeat: no-repeat;
+    background-repeat: round;
 }
 
 #mid-pole {
     background-image: url("images/pole_medium.png");
-    background-repeat: no-repeat;
+    background-repeat: round;
     width: 4%;
 }
 
 #large-pole {
     background-image: url("images/pole_large.png");
-    background-repeat: no-repeat;
+    background-repeat: round;
     width: 5%;
 }
 

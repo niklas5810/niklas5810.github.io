@@ -278,7 +278,9 @@
 
     //Method that will be called, when a shake was noticed.
     function shakeOccured() {
-        jump();
+        if(playing) {
+            jump();
+        }
     }
 
     //Listen for spacebar presses
@@ -287,8 +289,9 @@
         if (key == " ") {
             if (!playing) {
                 restart();
+            } else {
+                jump();
             }
-            jump();
         }
     });
 
@@ -296,8 +299,9 @@
     game.addEventListener("mousedown", function (e) {
         if (!playing) {
             restart();
+        } else {
+            jump();
         }
-        jump();
     });
 
     //restart();
