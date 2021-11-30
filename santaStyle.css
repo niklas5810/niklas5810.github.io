@@ -70,13 +70,13 @@ html, body {
 #santa {
     object-fit: contain;
     height: 12%;
-    width: 5%;
     position: absolute;
     border: none;
     bottom: 15%;
     left: 20%;
     padding-bottom: 0;
     object-position: bottom;
+    resize: both;
 }
 
 .pole {
