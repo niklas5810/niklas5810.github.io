@@ -12,17 +12,22 @@ html, body {
 }
 
 @media only screen and (max-width: 360px) {
-    #game{
-        font-family: "Wide Latin", serif;
-        text-align: center;
-        margin: auto;
-        animation: snowing 2s infinite linear;
-        background-repeat: repeat;
-        background-size: 200px 200px;
-        width: 200%;
-        height:100%;
-        position: relative;
-        overflow: hidden;
+    #restart-btn {
+        height: 20%;
+        width: 50%;
+        font-family: Gadugi;
+        position: absolute;
+        background-color: red;
+        color: white;
+        font-size: 200%;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        top: 50%;
+        left: 50%;
+        margin-top: -10%;
+        margin-left: -25%;
+        resize: both;
     }
 }
 
@@ -51,8 +56,8 @@ html, body {
 }
 
 #restart-btn {
-    height: 5%;
-    width: 10%;
+    height: 10%;
+    width: 20%;
     font-family: Gadugi;
     position: absolute;
     background-color: red;
@@ -63,8 +68,9 @@ html, body {
     outline: none;
     top: 50%;
     left: 50%;
-    margin-top: -2.5%;
-    margin-left: -5%;
+    margin-top: -5%;
+    margin-left: -10%;
+    resize: both;
 }
 
 #santa {
@@ -90,21 +96,21 @@ html, body {
 
 #pole-1 {
     width: 2.5%;
-    background-image: url("images/sugar_pole_2.png");
+    background-image: url("images/sugar_cone_4.png");
 }
 
 #pole-2 {
     width: 2.5%;
-    background-image: url("images/sugar_pole_2.png");
+    background-image: url("images/sugar_cone_4.png");
 }
 
 #mid-pole {
-    background-image: url("images/pole_medium.png");
+    background-image: url("images/sugar_cone_4.png");
     width: 4%;
 }
 
 #large-pole {
-    background-image: url("images/pole_large.png");
+    background-image: url("images/sugar_cone_4.png");
     width: 5%;
 }
 
