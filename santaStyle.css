@@ -45,8 +45,7 @@ html, body {
 }
 
 #restart-btn {
-    height: 10%;
-    width: 20%;
+    size: auto;
     font-family: Gadugi;
     position: absolute;
     background-color: red;
@@ -57,8 +56,6 @@ html, body {
     outline: none;
     top: 50%;
     left: 50%;
-    margin-top: -5%;
-    margin-left: -10%;
     resize: both;
 }
 
