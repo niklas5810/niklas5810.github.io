@@ -120,7 +120,7 @@ html, body {
 }
 
 .jump {
-    animation: jump 0.5s alternate cubic-bezier(0.08, 0.85, 0.35, 1.01);
+    animation: jump 0.5s linear;
 }
 
 .running {
@@ -132,10 +132,29 @@ html, body {
         bottom: 18%;
     }
 
+    30% {
+        bottom: 38%;
+    }
+
+    40% {
+        bottom: 39%;
+    }
+
     50% {
         bottom: 40%;
     }
 
+    60% {
+        bottom: 39%;
+    }
+
+    70% {
+        bottom: 36%;
+    }
+
+    100% {
+        bottom: 18%;
+    }
 }
 
 
