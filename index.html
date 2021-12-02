@@ -28,6 +28,7 @@
     <div class="pole" id="large-pole"></div>
     <div id="floor"></div>
     <button id="restart-btn">Restart</button>
+    <div class="hide" id="turn_device_text">Please turn your device</div>
 </div>
 
 <script type="text/javascript">
@@ -40,6 +41,7 @@
     const pole2 = document.querySelector('#pole-2');
     const game = document.querySelector('#game');
     const restartBtn = document.querySelector('#restart-btn');
+    const turnDeviceMessage = document.querySelector('#turn_device_text');
     const fps = 30;
     const fpsInterval = 1000 / fps;
     const maxAmnPoles = 3;
@@ -58,6 +60,9 @@
     let lastPole;
     let gameWidth = game.clientWidth;
     let gameHeight = game.clientHeight;
+
+    //Check for correct device orientation
+
 
     //Place the initial poles and set the flag for the first game
     placeInitialPoles();
@@ -78,6 +83,11 @@
 
     //Initialize, what method should be called, when shake was noticed.
     window.addEventListener('shake', shakeOccured, false);
+
+    //window.onresize = function() {processDeviceOrientation()};
+
+
+
 
     //Restarts the game, initializes all necessary variables
     function restart() {
@@ -208,6 +218,14 @@
             }, (Math.random() * 1000));
         }
 
+    }
+
+
+    /**
+     * Function returns true, if the device is currently in landscape mode.
+     */
+    function isInLandscapeMode() {
+        return window.innerWidth > window.innerHeight;
     }
 
 

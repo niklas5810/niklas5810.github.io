@@ -11,27 +11,8 @@ html, body {
     padding-top: 50vw;
 }
 
-@media only screen and (max-width: 360px) {
-    #restart-btn {
-        height: 20%;
-        width: 50%;
-        font-family: Gadugi;
-        position: absolute;
-        background-color: red;
-        color: white;
-        font-size: 200%;
-        border: none;
-        cursor: pointer;
-        outline: none;
-        top: 50%;
-        left: 50%;
-        margin-top: -10%;
-        margin-left: -25%;
-        resize: both;
-    }
-}
 
-@media only screen and (min-width: 361px) {
+@media only screen and (min-width: 801px) {
     #game{
         font-family: "Wide Latin", serif;
         text-align: center;
@@ -43,6 +24,14 @@ html, body {
         height:100%;
         position: relative;
         overflow: hidden;
+    }
+
+    #santa {
+        height: 12%;
+    }
+
+    .pole {
+        height: 10%;
     }
 }
 
@@ -74,13 +63,13 @@ html, body {
 }
 
 #santa {
-    object-fit: contain;
-    height: 12%;
     position: absolute;
+    object-fit: contain;
+    max-width: 6%;
+    height: 12%;
     border: none;
     bottom: 15%;
     left: 20%;
-    padding-bottom: 0;
     object-position: bottom;
     resize: both;
 }
@@ -112,6 +101,11 @@ html, body {
 #large-pole {
     background-image: url("images/sugar_cone_4.png");
     width: 5%;
+}
+
+#turn_device_text {
+    font-size: 10vw;
+    background-color: red;
 }
 
 
