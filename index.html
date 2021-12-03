@@ -20,18 +20,23 @@
 
 <body>
 <div id="game">
-    <div id="image-wrapper">
-        <img src="images/Santa_Jump_Title.png" class="title" id="title-big">
-        <img src="images/Santa_Jump_Title_small.png" class="title" id="title-small">
-    </div>
+
     <img src= images/santa_freigestellt.png id="santa"></img>
     <div class="pole" id="pole-1"></div>
     <div class="pole" id="pole-2"></div>
     <div class="pole" id="mid-pole"></div>
     <div class="pole" id="large-pole"></div>
     <div id="floor"></div>
-    <div id="center-wrapper">
-        <button id="restart-btn">Restart</button>
+    <div id="width-center-wrapper">
+
+        <div id="center-wrapper">
+            <div id="image-wrapper">
+                <img src="images/Santa_Jump_Title.png" class="title" id="title-big">
+                <img src="images/Santa_Jump_Title_small.png" class="title" id="title-small">
+            </div>
+            <button id="restart-btn">Restart</button>
+        </div>
+
     </div>
 </div>
 
@@ -58,8 +63,7 @@
      * screenWidth <= smallScreenBorder and not '<'.
      */
     const smallScreenBorder = 800;
-    const titleSmall = document.querySelector('#title-small');
-    const titleBig = document.querySelector('#title-big');
+    const title = document.querySelector('#image-wrapper');
 
     //make some variables accessible to functions
     let playing;
@@ -99,6 +103,7 @@
         //Remove 'restart'-button from UI.
         restartBtn.removeEventListener('click', restart);
         restartBtn.classList.toggle('hide');
+        title.classList.add('hide');
         santa.classList.add('.running');
         speed = 15;
         score = 0;
@@ -269,6 +274,7 @@
         playing = false;
         restartBtn.classList.toggle('hide');
         restartBtn.addEventListener('click', restart);
+        title.classList.remove('hide');
     }
 
     /**
