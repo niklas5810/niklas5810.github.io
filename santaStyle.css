@@ -91,16 +91,18 @@ html, body {
 }
 
 #restart-btn {
-    size: auto;
     font-family: Gadugi;
     position: center;
     margin-bottom: 10%;
+    background-image: url("images/New_Game_No_Colors.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 10%;
+    width: 20%;
+    border: black;
     background-color: red;
-    color: white;
-    font-size: 300%;
-    border: none;
     cursor: pointer;
-    outline: none;
     resize: both;
 }
 
