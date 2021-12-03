@@ -12,7 +12,7 @@ html, body {
 }
 
 #game{
-    font-family: "Wide Latin", serif;
+    font-family: 'Back to 1982', serif;
     text-align: center;
     margin: auto;
     animation: snowing 2s infinite linear;
@@ -36,7 +36,7 @@ html, body {
 }
 
 #width-center-wrapper {
-    height: 82%;
+    height: 70%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -238,4 +238,9 @@ html, body {
     }
 }
 
+
+@font-face {
+    font-family: 'Back to 1982', monospace;
+    src: url("fonts/BACKTO1982.TTF") format('ttf');
+}
 

@@ -20,7 +20,7 @@
 
 <body>
 <div id="game">
-
+    <h1>Score: <span id="score">0</span></h1>
     <img src= images/santa_freigestellt.png id="santa"></img>
     <div class="pole" id="pole-1"></div>
     <div class="pole" id="pole-2"></div>
@@ -58,6 +58,7 @@
     const floorHeight = 0.15;
     const minimalGapBetweenPoles = 400;
     const poleHeight = 8 + "%";
+    const scoreSpan = document.querySelector('#score');
     /**The maximum width for a screen to be treated as a
     *small screen. To identify small screens, one have to use
      * screenWidth <= smallScreenBorder and not '<'.
@@ -66,8 +67,8 @@
     const title = document.querySelector('#image-wrapper');
 
     //make some variables accessible to functions
-    let playing;
     let score;
+    let playing;
     let speed;
     let scoreUpdated;
     let jumping;
@@ -107,6 +108,7 @@
         santa.classList.add('.running');
         speed = 15;
         score = 0;
+        scoreSpan.textContent = score;
         scoreUpdated = false;
         myShakeEvent.start();
         then = Date.now();
@@ -135,7 +137,7 @@
             let polesCurrentPos = parseFloat(window.getComputedStyle(pole).getPropertyValue("right"));
 
             //Update score
-            if (polesCurrentPos > gameWidth * 0.8) {
+             if (polesCurrentPos > gameWidth * 0.8) {
                 if (!scoreUpdated) {
                     score += 1;
                     scoreUpdated = true;
@@ -147,6 +149,7 @@
                 //window.console.log(polesCurrentPos);
                 //Set it back to the start and hide the pole
                 pole.removeAttribute('placed');
+                pole.removeAttribute('counted');
                 pole.classList.toggle('hide');
                 polesCurrentPos = 0;
                 pole.style.right = 0;
@@ -175,9 +178,9 @@
             }, (Math.random() * 1000));
         }
 
-
         //check for collisions
         checkForCollisions();
+        scoreSpan.textContent = score;
     }
 
 
@@ -191,6 +194,7 @@
             pole.classList.add('hide');
             pole.style.right = 0 + "%";
             pole.removeAttribute('placed');
+            pole.removeAttribute('counted');
         }));
         placedPoles = 0;
 
@@ -246,6 +250,26 @@
                 }
             }
         });
+    }
+
+
+    /**
+     * Function checks, whether santa has passed a pole successfully. In this case, and if the passing
+     * of the pole has not been counted yet, the function updates the score.
+     */
+    function updateScore() {
+        let santaRight = santa.getBoundingClientRect().right;
+        let santaLeft = santaRight - 20;
+
+        poles.forEach((pole) => {
+            if ((pole.getAttribute('placed') == "true") && (pole.getAttribute('counted') != 'true')) {
+                let poleLeft = pole.getBoundingClientRect().right - pole.getBoundingClientRect().width;
+                if (santaLeft < poleLeft) {
+                    score += 1;
+                    pole.setAttribute('counted', 'true');
+                }
+            }
+        })
     }
 
 
