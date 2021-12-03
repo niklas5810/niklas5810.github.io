@@ -31,6 +31,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    top: 0%;
 }
 
 @media only screen and (max-width: 800px) {
@@ -40,12 +41,27 @@ html, body {
         animation-fill-mode: forwards;
     }
 
+    #title-big {
+        display: none;
+    }
+
+    #title-small {
+        display: inline;
+    }
 }
 
 @media only screen and (min-width: 801px) {
 
     .jump {
         animation: jump 0.5s linear;
+    }
+
+    #title-small {
+        display: none;
+    }
+
+    #title-big {
+        display: inline;
     }
 }
 
@@ -113,9 +129,17 @@ html, body {
     width: 5%;
 }
 
-#turn_device_text {
-    font-size: 10vw;
-    background-color: red;
+
+.title {
+    width: 80%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    object-fit: contain;
+    max-width: 80%;
+    resize: both;
+    top: 20%;
+    size: auto;
 }
 
 

@@ -20,7 +20,10 @@
 
 <body>
 <div id="game">
-    <h1>Santa Jump</h1>
+    <div id="image-wrapper">
+        <img src="images/Santa_Jump_Title.png" class="title" id="title-big">
+        <img src="images/Santa_Jump_Title_small.png" class="title" id="title-small">
+    </div>
     <img src= images/santa_freigestellt.png id="santa"></img>
     <div class="pole" id="pole-1"></div>
     <div class="pole" id="pole-2"></div>
@@ -55,6 +58,8 @@
      * screenWidth <= smallScreenBorder and not '<'.
      */
     const smallScreenBorder = 800;
+    const titleSmall = document.querySelector('#title-small');
+    const titleBig = document.querySelector('#title-big');
 
     //make some variables accessible to functions
     let playing;
@@ -67,6 +72,7 @@
     let gameWidth = game.clientWidth;
     let gameHeight = game.clientHeight;
 
+    hideWrongTitle();
 
     //Place the initial poles and set the flag for the first game
     placeInitialPoles();
@@ -87,6 +93,23 @@
 
     //Initialize, what method should be called, when shake was noticed.
     window.addEventListener('shake', shakeOccured, false);
+
+    //Make the right game title visible, after the screen was resized.
+    window.onresize = function(){ hideWrongTitle(); };
+
+    /**
+     * Function hides game titles of wrong size. It also makes the right game title visible.
+     * Function should be called after every resizing.
+     */
+    function hideWrongTitle() {
+        if (gameWidth <= smallScreenBorder) {
+            titleBig.classList.add('hide');
+            titleSmall.classList.remove('hide');
+        } else {
+            titleBig.classList.remove('hide');
+            titleSmall.classList.add('hide');
+        }
+    }
 
 
     //Restarts the game, initializes all necessary variables
