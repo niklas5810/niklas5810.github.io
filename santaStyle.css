@@ -5,14 +5,9 @@ html, body {
 }
 
 
-#h1 {
-    font-size: 80vw;
-    margin-top: 50vw;
-    padding-top: 50vw;
-}
-
 #game{
     font-family: 'Back to 1982', serif;
+    font-size: 1vw;
     text-align: center;
     margin: auto;
     animation: snowing 2s infinite linear;
@@ -36,12 +31,12 @@ html, body {
 }
 
 #width-center-wrapper {
-    height: 70%;
+    height: 65%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0%;
+    bottom: 18%;
 }
 
 #image-wrapper {
@@ -50,7 +45,7 @@ html, body {
     resize: both;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
 
     .jump {
         animation: jump 0.7s linear;
@@ -66,7 +61,7 @@ html, body {
     }
 }
 
-@media only screen and (min-width: 801px) {
+@media only screen and (min-width: 701px) {
 
     .jump {
         animation: jump 0.5s linear;
@@ -81,6 +76,28 @@ html, body {
     }
 }
 
+@media only screen and (max-height: 400px) {
+    #h1 {
+        font-family: "Comic Sans MS";
+        font-size: 2vw;
+    }
+
+
+    #image-wrapper {
+        max-height: 50%;
+    }
+}
+
+
+@media only screen and (min-height: 401px) {
+    #h1 {
+        font-size: 80vw;
+        margin-top: 50vw;
+        padding-top: 50vw;
+    }
+
+}
+
 
 #floor{
     position: absolute;
@@ -93,13 +110,14 @@ html, body {
 #restart-btn {
     font-family: Gadugi;
     position: center;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
     background-image: url("images/New_Game_No_Colors.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    height: 10%;
+    height: 15%;
     width: 20%;
+    min-height: 15%;
     border: black;
     background-color: red;
     cursor: pointer;
@@ -151,11 +169,10 @@ html, body {
 .title {
     object-fit: contain;
     width: 80%;
+    max-height: 80%;
     border: none;
     resize: both;
 }
-
-
 
 
 .hide {
