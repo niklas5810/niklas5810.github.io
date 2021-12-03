@@ -34,8 +34,10 @@ html, body {
 }
 
 @media only screen and (max-width: 800px) {
+
     .jump {
         animation: jump 0.7s linear;
+        animation-fill-mode: forwards;
     }
 
 }
@@ -131,6 +133,14 @@ html, body {
         bottom: 18%;
     }
 
+    10% {
+        bottom: 25%;
+    }
+
+    20% {
+        bottom: 31%;
+    }
+
     30% {
         bottom: 38%;
     }
@@ -151,8 +161,12 @@ html, body {
         bottom: 36%;
     }
 
-    100% {
-        bottom: 18%;
+    80% {
+        bottom: 31%;
+    }
+
+    90% {
+        bottom: 25%;
     }
 }
 

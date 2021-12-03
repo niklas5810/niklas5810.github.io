@@ -50,6 +50,11 @@
     const floorHeight = 0.15;
     const minimalGapBetweenPoles = 400;
     const poleHeight = 8 + "%";
+    /**The maximum width for a screen to be treated as a
+    *small screen. To identify small screens, one have to use
+     * screenWidth <= smallScreenBorder and not '<'.
+     */
+    const smallScreenBorder = 800;
 
     //make some variables accessible to functions
     let playing;
@@ -240,9 +245,15 @@
      */
     function jump() {
         santa.classList.add("jump");
+        //Default timeoutTime is 500
+        var timeoutTime = 500;
+        //For small screens timeoutTime is 700
+        if (gameWidth < smallScreenBorder) {
+            timeoutTime = 700;
+        }
         setTimeout(function() {
             santa.classList.remove("jump");
-        }, 500);
+        }, timeoutTime);
     }
 
 
