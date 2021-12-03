@@ -106,15 +106,24 @@ html, body {
     resize: both;
 }
 
-#santa {
+#santa-jump-wrapper {
     position: absolute;
-    object-fit: contain;
     max-width: 6%;
     height: 12%;
+    width: 6%;
     border: none;
     bottom: 15%;
     left: 20%;
     object-position: bottom;
+    resize: both;
+}
+
+#santa {
+    position: absolute;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    border: none;
     resize: both;
 }
 
@@ -154,8 +163,6 @@ html, body {
     border: none;
     resize: both;
 }
-
-
 
 
 .hide {
@@ -212,17 +219,14 @@ html, body {
 
 @keyframes running {
     0% {
-        background-image: url("images/santa_freigestellt.png");
+        background-position: bottom;
     }
 
     50% {
-        background-image: url("images/santa_freigestellt_2.png");
-    }
-
-    100% {
-        background-image: url("images/santa_freigestellt.png");
+        background-position: top;
     }
 }
+
 
 @keyframes snowing {
     0% {

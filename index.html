@@ -20,8 +20,9 @@
 
 <body>
 <div id="game">
-
-    <img src= images/santa_freigestellt.png id="santa"></img>
+    <div id="santa-jump-wrapper">
+        <img src= images/santa_freigestellt.png id="santa"></img>
+    </div>
     <div class="pole" id="pole-1"></div>
     <div class="pole" id="pole-2"></div>
     <div class="pole" id="mid-pole"></div>
@@ -50,7 +51,7 @@
     const pole2 = document.querySelector('#pole-2');
     const game = document.querySelector('#game');
     const restartBtn = document.querySelector('#restart-btn');
-    const turnDeviceMessage = document.querySelector('#turn_device_text');
+    const santaJumpWrapper = document.querySelector('#santa-jump-wrapper');
     const fps = 30;
     const fpsInterval = 1000 / fps;
     const maxAmnPoles = 3;
@@ -104,7 +105,7 @@
         restartBtn.removeEventListener('click', restart);
         restartBtn.classList.toggle('hide');
         title.classList.add('hide');
-        santa.classList.add('.running');
+        santa.classList.add('running');
         speed = 15;
         score = 0;
         scoreUpdated = false;
@@ -254,7 +255,7 @@
      * performing a jump and is not touching the ground, no jump will be performed.
      */
     function jump() {
-        santa.classList.add("jump");
+        santaJumpWrapper.classList.add("jump");
         //Default timeoutTime is 500
         var timeoutTime = 500;
         //For small screens timeoutTime is 700
@@ -262,13 +263,13 @@
             timeoutTime = 700;
         }
         setTimeout(function() {
-            santa.classList.remove("jump");
+            santaJumpWrapper.classList.remove("jump");
         }, timeoutTime);
     }
 
 
     function gameOver() {
-        santa.classList.remove('.running');
+        santa.classList.remove('running');
         myShakeEvent.stop();
         window.console.log("game over");
         playing = false;
