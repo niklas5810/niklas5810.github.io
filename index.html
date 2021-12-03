@@ -254,26 +254,6 @@
 
 
     /**
-     * Function checks, whether santa has passed a pole successfully. In this case, and if the passing
-     * of the pole has not been counted yet, the function updates the score.
-     */
-    function updateScore() {
-        let santaRight = santa.getBoundingClientRect().right;
-        let santaLeft = santaRight - 20;
-
-        poles.forEach((pole) => {
-            if ((pole.getAttribute('placed') == "true") && (pole.getAttribute('counted') != 'true')) {
-                let poleLeft = pole.getBoundingClientRect().right - pole.getBoundingClientRect().width;
-                if (santaLeft < poleLeft) {
-                    score += 1;
-                    pole.setAttribute('counted', 'true');
-                }
-            }
-        })
-    }
-
-
-    /**
      * Method lets Santa perform a jump, is he is currently walking on the ground. If Santa is already
      * performing a jump and is not touching the ground, no jump will be performed.
      */
