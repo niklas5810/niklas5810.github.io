@@ -1,11 +1,12 @@
 
 @font-face {
     font-family: 'Back to 1982', monospace;
-    src: url("fonts/BACKTO1982.TTF") format('ttf'),
+    url("fonts/Backto1982.eot");
+    src: url("fonts/BACKTO1982.TTF") format('truetype'),
     url("fonts/Backto1982.woff") format('woff'),
     url("fonts/Backto1982.woff2") format('woff2'),
-    url("fonts/Backto1982.svg") format('svg'),
-    url("fonts/Backto1982.eot") format('embedded-opentype');
+    url("fonts/Backto1982.svg") format('svg');
+
 }
 
 html, body {
@@ -57,7 +58,7 @@ html, body {
 @media only screen and (max-width: 700px) {
 
     #game {
-        font-size: 2vw;
+        font-size: 3vw;
     }
 
     .jump {
