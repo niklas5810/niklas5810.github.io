@@ -1,11 +1,11 @@
 
 @font-face {
     font-family: 'Back to 1982', monospace;
-    src: url("fonts/BACKTO1982.TTF") format('ttf');
-    src: url("fonts/Backto1982.woff") format('woff');
-    src: url("fonts/Backto1982.woff2") format('woff2');
-    src: url("fonts/Backto1982.svg") format('svg');
-    src: url("fonts/Backto1982.eot") format('embedded-opentype');
+    src: url("fonts/BACKTO1982.TTF") format('ttf'),
+    url("fonts/Backto1982.woff") format('woff'),
+    url("fonts/Backto1982.woff2") format('woff2'),
+    url("fonts/Backto1982.svg") format('svg'),
+    url("fonts/Backto1982.eot") format('embedded-opentype');
 }
 
 html, body {
