@@ -1,3 +1,11 @@
+
+@font-face {
+    font-family: 'Back to 1982', monospace;
+    src: url("fonts/BACKTO1982.TTF") format('ttf');
+    src: url("fonts/Backto1982.woff") format('woff');
+    src: url("fonts/Backto1982.woff2") format('woff2');
+}
+
 html, body {
     height: 100%;
     width: 100%;
@@ -49,7 +57,7 @@ html, body {
     #game {
         font-size: 2vw;
     }
-    
+
     .jump {
         animation: jump 0.7s linear;
         animation-fill-mode: forwards;
@@ -262,9 +270,4 @@ html, body {
     }
 }
 
-
-@font-face {
-    font-family: 'Back to 1982', monospace;
-    src: url("fonts/BACKTO1982.TTF") format('ttf');
-}
 
