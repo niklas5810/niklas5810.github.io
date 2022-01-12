@@ -20,7 +20,7 @@
 
 <body>
 <div id="game">
-    <h1>Score: <span id="score">0</span></h1>
+    <h1 id="score-text">Score: <span id="score">0</span></h1>
     <img src= images/santa_freigestellt.png id="santa"></img>
     <div class="pole" id="pole-1"></div>
     <div class="pole" id="pole-2"></div>
@@ -34,7 +34,7 @@
                 <img src="images/Santa_Jump_Title.png" class="title" id="title-big">
                 <img src="images/Santa_Jump_Title_small.png" class="title" id="title-small">
             </div>
-            <h3>Click, Tap, Press Space or shake (not available on all devices) to jump</h3>
+            <h3 id="how-to">Click, Tap, Press Space or shake (not available on all devices) to jump</h3>
             <button id="restart-btn"></button>
         </div>
 
@@ -51,7 +51,8 @@
     const pole2 = document.querySelector('#pole-2');
     const game = document.querySelector('#game');
     const restartBtn = document.querySelector('#restart-btn');
-    const turnDeviceMessage = document.querySelector('#turn_device_text');
+    const howTo = document.querySelector('#how-to');
+    const scoreText = document.querySelector('#score-text');
     const fps = 30;
     const fpsInterval = 1000 / fps;
     const maxAmnPoles = 3;
@@ -82,6 +83,7 @@
     //Place the initial poles and set the flag for the first game
     placeInitialPoles();
     var firstGame = true;
+    scoreText.classList.add('hide');
 
 
     //Initialize shake.js
@@ -107,6 +109,8 @@
         restartBtn.classList.toggle('hide');
         title.classList.add('hide');
         santa.classList.add('.running');
+        howTo.classList.add('hide');
+        scoreText.classList.remove('hide');
         speed = 15;
         score = 0;
         scoreSpan.textContent = score;
@@ -280,6 +284,8 @@
         restartBtn.classList.toggle('hide');
         restartBtn.addEventListener('click', restart);
         title.classList.remove('hide');
+        howTo.classList.remove('hide');
+        scoreText.classList.add('hide');
     }
 
     /**
