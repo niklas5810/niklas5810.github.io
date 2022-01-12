@@ -65,7 +65,7 @@ html, body {
     height: 100%;
     width: 100%;
     resize: both;
-    padding-top: calc(7% + 40px);
+    padding-top: calc(6% + 40px);
 }
 
 @media only screen and (max-width: 500px) {
