@@ -88,7 +88,7 @@ html, body {
 @media only screen and (min-width: 701px) {
 
     #game {
-        font-size: 1vw;
+        font-size: 2vw;
     }
 
     .jump {
