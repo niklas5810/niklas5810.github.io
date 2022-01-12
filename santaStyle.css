@@ -62,6 +62,8 @@ html, body {
 #image-wrapper {
     object-fit: contain;
     size: auto;
+    height: 100%;
+    width: 100%;
     resize: both;
     padding-top: calc(8% + 50px);
 }
