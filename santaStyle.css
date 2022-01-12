@@ -63,10 +63,10 @@ html, body {
     object-fit: contain;
     size: auto;
     resize: both;
-    padding-top: 12%;
+    padding-top: calc(8% + 50px);
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 500px) {
 
     #game {
         font-size: 3vw;
@@ -86,7 +86,7 @@ html, body {
     }
 }
 
-@media only screen and (min-width: 701px) {
+@media only screen and (min-width: 501px) {
 
     #game {
         font-size: 2vw;
